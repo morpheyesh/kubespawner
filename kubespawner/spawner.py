@@ -1621,6 +1621,18 @@ class KubeSpawner(Spawner):
         # track by order and name instead of uid
         # so we get events like deletion of a previously stale
         # pod if it's part of this spawn process
+
+
+        if 'cpu_limit' and 'cpu_guarantee' and 'mem_limit' and 'mem_guarantee' in user_options.keys():
+            self.cpu_limit = user_options['cpu_limit']
+            self.cpu_guarantee = user_options['cpu_guarantee']
+            self.mem_limit = user_options['mem_limit']
+            self.mem_guarantee = user_options['mem_guarantee']
+        
+        else:
+            raise Exception('Could not create a nodebook. Please ensure all the necessary parameters are passed it.')
+
+
         events = self.events
         if events:
             self._last_event = events[-1].metadata.uid
